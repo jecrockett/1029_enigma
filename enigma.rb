@@ -81,12 +81,12 @@ class Enigma
     end_of_message = c.extract_ending(message)
     expected_ending = [14, 14, 69, 78, 68, 14, 14]
     actual_ending = mc.convert_to_numbers(end_of_message)
-
-    rotations = nr.subtract(actual_ending, expected_ending)
-    reduced = nr.reduce(rotations)
-    final_offsets = c.arrange_order(message, reduced)
-    key_offsets = nr.subtract(final_offsets, date_offsets)
-    key = c.key(key_offsets)
+    c.interpret_key(actual_ending, expected_ending, message, date_offsets)
+    # rotations = nr.subtract(actual_ending, expected_ending)
+    # reduced = nr.reduce(rotations)
+    # final_offsets = c.arrange_order(message, reduced)
+    # key_offsets = nr.subtract(final_offsets, date_offsets)
+    # key = c.key(key_offsets)
   end
 
 
