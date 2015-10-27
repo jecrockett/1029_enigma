@@ -13,42 +13,35 @@ class KeyCrackTest < Minitest::Test
     assert_equal "..end..", ending
   end
 
-  def test_date_offsets
-    og = OffsetGenerator.new
-    date = 311015
-    date_offsets = og.generate_date_offsets(date)
-    assert_equal [0, 2, 2, 5], date_offsets
-  end
-
-  def test_expected_final_numbers
-    mc = MessageConverter.new
-    message = "..end.."
-    expected_numbers = mc.convert_to_numbers(message)
-    assert_equal [14, 14, 69, 78, 68, 14, 14], expected_numbers
+  def test_extraction_with_less_than_seven_digits
+    c = KeyCrack.new
+    message = "hi"
+    ending = c.extract_ending(message)
+    assert_equal nil, ending
   end
 
   def test_difference_between_expected_and_actual
     nr = NumberRotater.new
+    # using key = 63673 date = 271015
     expected = [14, 14, 69, 78, 68, 14, 14]
-    actual = [83, 1, 41, 25, 46, 1, 77]
-    # using key = 63673 date = 261015
+    actual = [77, 52, 47, 65, 40, 52, 83]
+    # kos = 63 36 67 73
+    # dos = 0  2  2  5
     difference = nr.subtract(actual, expected)
-    assert_equal [69, -13, -28, -53, -22, -13, 63], difference
-
-    actual = []
+    assert_equal [63, 38, -22, -13, -28, 38, 69], difference
   end
 
   def test_reduced_differences
     nr = NumberRotater.new
-    differences = [69, -13, -28, -53, -22, -13, 63]
+    differences = [63, 38, -22, -13, -28, 38, 69]
     reduced = nr.reduce(differences)
-    assert_equal [69, 78, 63, 38, 69, 78, 63], reduced
+    assert_equal [63, 38, 69, 78, 63, 38, 69], reduced
   end
 
   def test_arrange_order
     c = KeyCrack.new
     message = "hello, how are you? ..end.."
-    reduced_differences = [69, 78, 63, 38, 69, 78, 63]
+    reduced_differences = [63, 38, 69, 78, 63, 38, 69]
     offsets_in_order = c.arrange_order(message, reduced_differences)
     assert_equal [63, 38, 69, 78], offsets_in_order
   end

@@ -2,16 +2,13 @@ require './number_rotater'
 
 class KeyCrack
 
-  def initialize
-    create_objects
-  end
-
   def extract_ending(input)
-    input[-7..-1]
-  end
-
-  def unique(numbers)
-    numbers.uniq
+    if input.chars.length >= 7
+      input[-7..-1]
+    else
+      puts "Not enough characters to extract."
+      return nil
+    end
   end
 
   def calculate_difference(actual, expected)
@@ -27,11 +24,11 @@ class KeyCrack
     when 0
       differences[-4..-1]
     when 1
-      differences[-7..-4]
+      differences[-5..-2]
     when 2
       differences[-6..-3]
     when 3
-      differences [-5..-2]
+      differences [-7..-4]
     end
   end
 
@@ -44,10 +41,6 @@ class KeyCrack
     key = key.join.to_i
   end
 
-  def create_objects
-    @kdg = KeyDateGenerator.new
-    @og = OffsetGenerator.new
-    @nr = NumberRotater.new
-  end
+
 
 end

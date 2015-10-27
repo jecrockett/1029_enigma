@@ -33,4 +33,11 @@ class MessageConverterTest < Minitest::Test
     assert_equal "boston", converted_message
   end
 
+  def test_expected_final_numbers_for_crack
+    mc = MessageConverter.new
+    message = "..end.."
+    expected_numbers = mc.convert_to_numbers(message)
+    assert_equal [14, 14, 69, 78, 68, 14, 14], expected_numbers
+  end
+
 end
