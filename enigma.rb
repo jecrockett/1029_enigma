@@ -7,40 +7,42 @@ require './crack'
 class Enigma
 
   def encrypt(key=nil, date=nil, message)
-    create_objects
-    @key = check_key(key)
-    check_date(date)
-    puts "Key = #{@key} | Date = #{@date}"
-    encrypt_message(@key, @date, message)
+    key = check_key(key)
+    date = check_date(date)
+    puts "Key = #{key} | Date = #{date}"
+    encrypt_message(key, date, message)
   end
 
   def decrypt(key, date=nil, message)
-    create_objects
-    check_date(date)
-    decrypt_message(key, @date, message)
+    date = check_date(date)
+    decrypt_message(key, date, message)
   end
 
-  def crack(date=@date, message)
-    create_objects
-    check_date(date)
+  def crack(date=nil, message)
+    date = check_date(date)
     date_offsets = @og.generate_date_offsets(date)
-    final_offsets = @c.final_offsets(message)
+    ending = @c.extract_ending(message)
+    ending = @mc.convert_to_numbers(ending)
+    expected_ending = [14, 14, 69, 78, 68, 14, 14]
+    differences = @nr.subtract(ending, expected_ending)
+    reduced = @nr.reduce(differences)
+    final_offsets = @c.arrange_order(message, reduced)
     key_offsets = @nr.subtract(final_offsets, date_offsets)
     key = @c.key(key_offsets)
     decrypt(key, @date, message)
   end
 
-  def create_required_objects
-    @kdg = KeyDateGenerator.new
-    @og = OffsetGenerator.new
-    @mc = MessageConverter.new
-    @nr = NumberRotater.new
-    @c = KeyCrack.new
-  end
+  # def create_objects
+  #   og = OffsetGenerator.new
+  #   mc = MessageConverter.new
+  #   nr = NumberRotater.new
+  #   c = KeyCrack.new
+  # end
 
   def check_key(key)
     if key.nil?
-      @kdg.generate_key
+      kdg = KeyDateGenerator.new
+      kdg.generate_key
     else
       key
     end
@@ -48,24 +50,31 @@ class Enigma
 
   def check_date(date)
     if date.nil?
-      @date = @kdg.generate_date
+      kdg = KeyDateGenerator.new
+      kdg.generate_date
     else
-      @date = date
+      date
     end
   end
 
   def encrypt_message(key, date, message)
-    offsets = @og.offsets(key, date)
-    numbers = @mc.convert_to_numbers(message)
-    rotated_numbers = @nr.encryption_rotation(numbers, offsets)
-    @mc.convert_to_letters(rotated_numbers)
+    og = OffsetGenerator.new
+    mc = MessageConverter.new
+    nr = NumberRotater.new
+    offsets = og.offsets(key, date)
+    numbers = mc.convert_to_numbers(message)
+    rotated_numbers = nr.encryption_rotation(numbers, offsets)
+    mc.convert_to_letters(rotated_numbers)
   end
 
   def decrypt_message(key, date, message)
-    offsets = @og.offsets(key, date)
-    numbers = @mc.convert_to_numbers(message)
-    rotated_numbers = @nr.decryption_rotation(numbers, offsets)
-    @mc.convert_to_letters(rotated_numbers)
+    og = OffsetGenerator.new
+    mc = MessageConverter.new
+    nr = NumberRotater.new
+    offsets = og.offsets(key, date)
+    numbers = mc.convert_to_numbers(message)
+    rotated_numbers = nr.decryption_rotation(numbers, offsets)
+    mc.convert_to_letters(rotated_numbers)
   end
 
 

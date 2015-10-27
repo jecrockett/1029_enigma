@@ -17,24 +17,25 @@ class KeyCrackTest < Minitest::Test
     og = OffsetGenerator.new
     date = 311015
     date_offsets = og.generate_date_offsets(date)
-    assert_equal 4, date_offsets.length
     assert_equal [0, 2, 2, 5], date_offsets
   end
 
-  # def test_expected_final_numbers
-  #   mc = MessageConverter.new
-  #   message = "..end.."
-  #   expected_numbers = mc.convert_to_numbers(message)
-  #   assert_equal [14, 14, 69, 78, 68, 14, 14], expected_numbers
-  # end
+  def test_expected_final_numbers
+    mc = MessageConverter.new
+    message = "..end.."
+    expected_numbers = mc.convert_to_numbers(message)
+    assert_equal [14, 14, 69, 78, 68, 14, 14], expected_numbers
+  end
 
   def test_difference_between_expected_and_actual
     nr = NumberRotater.new
     expected = [14, 14, 69, 78, 68, 14, 14]
     actual = [83, 1, 41, 25, 46, 1, 77]
-    # key = 63673 date = 261015
+    # using key = 63673 date = 261015
     difference = nr.subtract(actual, expected)
     assert_equal [69, -13, -28, -53, -22, -13, 63], difference
+
+    actual = []
   end
 
   def test_reduced_differences

@@ -2,17 +2,12 @@ require './number_rotater'
 
 class KeyCrack
 
-  def final_offsets(message)
-    ending = @c.extract_ending(message)
-    ending = @mc.convert_to_numbers(ending)
-    expected_ending = [14, 14, 69, 78, 68, 14, 14]
-    differences = @nr.subtract(ending, expected_ending)
-    reduced = @nr.reduce(differences)
-    final_offsets = @c.arrange_order(message, reduced)
+  def initialize
+    create_objects
   end
 
-  def extract_ending(message)
-    message[-7..-1]
+  def extract_ending(input)
+    input[-7..-1]
   end
 
   def unique(numbers)
@@ -47,6 +42,12 @@ class KeyCrack
       key << offset.to_s[-1]
     end
     key = key.join.to_i
+  end
+
+  def create_objects
+    @kdg = KeyDateGenerator.new
+    @og = OffsetGenerator.new
+    @nr = NumberRotater.new
   end
 
 end

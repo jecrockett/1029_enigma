@@ -13,12 +13,9 @@ class OffsetGenerator
   end
 
   def generate_date_offsets(date)
-    binding.pry
     date = date.to_i
     date_squared = date*date
-    binding.pry
     last_four = date_squared.to_s[-4..-1]
-    binding.pry
     last_four.chars.map do |char|
       char.to_i
     end
