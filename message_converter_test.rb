@@ -19,7 +19,7 @@ class MessageConverterTest < Minitest::Test
     assert_equal "0", index[1]
   end
 
-  def test_convert_to_numbers
+  def test_convert_letters_to_numbers
     mc = MessageConverter.new
     test_phrase = "boston"
     converted_message = mc.convert_to_numbers(test_phrase)

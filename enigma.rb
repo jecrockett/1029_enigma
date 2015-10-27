@@ -22,17 +22,6 @@ class Enigma
     date = check_date(date)
     key = crack_key(date, message)
     decrypt_message(key, date, message)
-    # date_offsets = @og.generate_date_offsets(date)
-    # ending = @c.extract_ending(message)
-    # ending = @mc.convert_to_numbers(ending)
-    # expected_ending = [14, 14, 69, 78, 68, 14, 14]
-    # differences = @nr.subtract(ending, expected_ending)
-    # reduced = @nr.reduce(differences)
-    # final_offsets = @c.arrange_order(message, reduced)
-    # key_offsets = @nr.subtract(final_offsets, date_offsets)
-    # key = @c.key(key_offsets)
-    #
-    # decrypt(key, @date, message)
   end
 
   # def create_objects
@@ -87,17 +76,19 @@ class Enigma
     og = OffsetGenerator.new
     mc = MessageConverter.new
     nr = NumberRotater.new
-
+    # c.setup_known_values(date, message)
     date_offsets = og.generate_date_offsets(date)
     end_of_message = c.extract_ending(message)
-    ending_in_numbers = mc.convert_to_numbers(end_of_message)
     expected_ending = [14, 14, 69, 78, 68, 14, 14]
-    rotations = nr.subtract(ending_in_numbers, expected_ending)
+    actual_ending = mc.convert_to_numbers(end_of_message)
+
+    rotations = nr.subtract(actual_ending, expected_ending)
     reduced = nr.reduce(rotations)
     final_offsets = c.arrange_order(message, reduced)
     key_offsets = nr.subtract(final_offsets, date_offsets)
     key = c.key(key_offsets)
   end
+
 
 
 

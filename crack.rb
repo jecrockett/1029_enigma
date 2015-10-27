@@ -1,6 +1,31 @@
-require './number_rotater'
-
 class KeyCrack
+
+  # def initialize(date, message)
+  #   og = OffsetGenerator.new
+  #   mc = MessageConverter.new
+  #   @date_offsets = og.generate_date_offsets(date)
+  #   end_of_message = extract_ending(message)
+  #   @expected_ending = [14, 14, 69, 78, 68, 14, 14]
+  #   @actual_ending = mc.convert_to_numbers(end_of_message)
+  # end
+
+  def setup_known_values(date, message)
+    og = OffsetGenerator.new
+    mc = MessageConverter.new
+    @date_offsets = og.generate_date_offsets(date)
+    end_of_message = extract_ending(message)
+    @expected_ending = [14, 14, 69, 78, 68, 14, 14]
+    @actual_ending = mc.convert_to_numbers(end_of_message)
+  end
+
+  def interpret_key(actual_ending, expected_ending, message)
+    nr = NumberRotater.new
+    rotations = nr.subtract(actual_ending, expected_ending)
+    reduced = nr.reduce(rotations)
+    final_offsets = arrange_order(message, reduced)
+    key_offsets = nr.subtract(final_offsets, date_offsets)
+    key = key(key_offsets)
+  end
 
   def extract_ending(input)
     if input.chars.length >= 7
