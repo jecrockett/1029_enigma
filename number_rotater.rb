@@ -2,13 +2,13 @@ class NumberRotater
 
   def encryption_rotation(numbers, offsets)
     offsets = match_length(numbers, offsets)
-    numbers = encrypt(numbers, offsets)
+    numbers = add(numbers, offsets)
     reduce(numbers)
   end
 
   def decryption_rotation(numbers, offsets)
     offsets = match_length(numbers, offsets)
-    numbers = decrypt(numbers, offsets)
+    numbers = subtract(numbers, offsets)
     reduce(numbers)
   end
 
@@ -22,14 +22,14 @@ class NumberRotater
     end
   end
 
-  def encrypt(numbers, offsets)
+  def add(numbers, offsets)
     combined = numbers.zip(offsets)
     combined.map do |pair|
       pair[0] + pair[1]
     end
   end
 
-  def decrypt(numbers, offsets)
+  def subtract(numbers, offsets)
     combined = numbers.zip(offsets)
     combined.map do |pair|
       pair[0] - pair[1]

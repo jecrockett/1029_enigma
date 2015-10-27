@@ -14,18 +14,18 @@ class NumberRotaterTest < Minitest::Test
   end
 
 
-  def test_encrypt
+  def test_add
     nr = NumberRotater.new
     numbers = [66, 79, 83, 84, 79, 78]
     offsets = [12, 25, 36, 50, 12, 25]
-    assert_equal [78, 104, 119, 134, 91, 103], nr.encrypt(numbers, offsets)
+    assert_equal [78, 104, 119, 134, 91, 103], nr.add(numbers, offsets)
   end
 
-  def test_decrypt
+  def test_subtract
     nr = NumberRotater.new
     numbers = [78, 104, 119, 134, 91, 103]
     offsets = [12, 25, 36, 50, 12, 25]
-    assert_equal [66, 79, 83, 84, 79, 78], nr.decrypt(numbers, offsets)
+    assert_equal [66, 79, 83, 84, 79, 78], nr.subtract(numbers, offsets)
   end
 
   def test_reduce
