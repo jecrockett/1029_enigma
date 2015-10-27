@@ -21,12 +21,12 @@ class KeyCrackTest < Minitest::Test
     assert_equal [0, 2, 2, 5], date_offsets
   end
 
-  def test_expected_final_numbers
-    mc = MessageConverter.new
-    message = "..end.."
-    expected_numbers = mc.convert_to_numbers(message)
-    assert_equal [14, 14, 69, 78, 68, 14, 14], expected_numbers
-  end
+  # def test_expected_final_numbers
+  #   mc = MessageConverter.new
+  #   message = "..end.."
+  #   expected_numbers = mc.convert_to_numbers(message)
+  #   assert_equal [14, 14, 69, 78, 68, 14, 14], expected_numbers
+  # end
 
   def test_difference_between_expected_and_actual
     nr = NumberRotater.new
@@ -54,9 +54,9 @@ class KeyCrackTest < Minitest::Test
 
   def test_subtract_date_offsets
     nr = NumberRotater.new
-    differences_in_order = [63, 38, 69, 78]
+    final_offsets = [63, 38, 69, 78]
     date_offsets = [0, 2, 2, 5]
-    key_offsets = nr.subtract(differences_in_order, date_offsets)
+    key_offsets = nr.subtract(final_offsets, date_offsets)
     assert_equal [63, 36, 67, 73], key_offsets
   end
 

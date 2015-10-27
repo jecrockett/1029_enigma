@@ -2,38 +2,32 @@ require './key_date_generator'
 require './offset_generator'
 require './message_converter'
 require './number_rotater'
+require './crack'
 
 class Enigma
 
   def encrypt(key=nil, date=nil, message)
-    create_required_objects
+    create_objects
     @key = check_key(key)
-    @date = check_date(date)
+    check_date(date)
     puts "Key = #{@key} | Date = #{@date}"
     encrypt_message(@key, @date, message)
   end
 
   def decrypt(key, date=nil, message)
-    create_required_objects
-    @date = check_date(date)
+    create_objects
+    check_date(date)
     decrypt_message(key, @date, message)
   end
 
-  def crack(date=nil, message)
-    @c = KeyCrack.new
-    @kdg = KeyDateGenerator.new
-    @og = OffsetGenerator.new
-    # mc = MessageConverter.new
-    @nr = NumberRotater.new
-    @date = check_date(date)
+  def crack(date=@date, message)
+    create_objects
+    check_date(date)
     date_offsets = @og.generate_date_offsets(date)
-    numbers = @mc.convert_to_numbers(message)
-
-
-
-
-
-    # returns decrypted message
+    final_offsets = @c.final_offsets(message)
+    key_offsets = @nr.subtract(final_offsets, date_offsets)
+    key = @c.key(key_offsets)
+    decrypt(key, @date, message)
   end
 
   def create_required_objects
@@ -41,6 +35,7 @@ class Enigma
     @og = OffsetGenerator.new
     @mc = MessageConverter.new
     @nr = NumberRotater.new
+    @c = KeyCrack.new
   end
 
   def check_key(key)
@@ -53,9 +48,9 @@ class Enigma
 
   def check_date(date)
     if date.nil?
-      @kdg.generate_date
+      @date = @kdg.generate_date
     else
-      date
+      @date = date
     end
   end
 

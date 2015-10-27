@@ -1,7 +1,14 @@
+require './number_rotater'
+
 class KeyCrack
 
-  def crack_key
-
+  def final_offsets(message)
+    ending = @c.extract_ending(message)
+    ending = @mc.convert_to_numbers(ending)
+    expected_ending = [14, 14, 69, 78, 68, 14, 14]
+    differences = @nr.subtract(ending, expected_ending)
+    reduced = @nr.reduce(differences)
+    final_offsets = @c.arrange_order(message, reduced)
   end
 
   def extract_ending(message)
