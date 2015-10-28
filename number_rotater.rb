@@ -1,12 +1,14 @@
 class NumberRotater
 
   def encryption_rotation(numbers, offsets)
+    binding.pry
     offsets = match_length(numbers, offsets)
     numbers = add(numbers, offsets)
     reduce(numbers)
   end
 
   def decryption_rotation(numbers, offsets)
+    binding.pry
     offsets = match_length(numbers, offsets)
     numbers = subtract(numbers, offsets)
     reduce(numbers)

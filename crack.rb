@@ -48,6 +48,4 @@ class KeyCrack
     key = key.join.to_i
   end
 
-
-
 end
