@@ -6,7 +6,9 @@ file_handler = FileHandler.new
 unencrypted_message = file_handler.read_file("#{ARGV[0]}").chomp
 
 if ARGV[2]
+  binding.pry
   key = file_handler.read_file(ARGV[2]).to_i
+  binding.pry
 else
   key = nil
 end

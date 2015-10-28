@@ -10,7 +10,6 @@ class OffsetGenerator
     first_digits = array_of_first_digits(key)
     second_digits = array_of_second_digits(key)
     key_offsets(first_digits, second_digits)
-    binding.pry
   end
 
   def generate_date_offsets(date)
@@ -47,7 +46,5 @@ class OffsetGenerator
       pair.join.to_i
     end
   end
-
-
 
 end
