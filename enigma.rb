@@ -2,7 +2,7 @@ require './key_date_generator'
 require './offset_generator'
 require './message_converter'
 require './number_rotater'
-require './crack'
+require './key_crack'
 
 class Enigma
 
@@ -15,12 +15,14 @@ class Enigma
 
   def decrypt(key, date=nil, message)
     date = check_date(date)
+    puts "Key = #{key} | Date = #{date}"
     decrypt_message(key, date, message)
   end
 
   def crack(date=nil, message)
     date = check_date(date)
     key = crack_key(date, message)
+    puts "Cracked Key = #{key} | Date = #{date}"
     decrypt_message(key, date, message)
   end
 

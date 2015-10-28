@@ -6,15 +6,13 @@ file_handler = FileHandler.new
 unencrypted_message = file_handler.read_file("#{ARGV[0]}").chomp
 
 if ARGV[2]
-  binding.pry
-  key = file_handler.read_file(ARGV[2]).to_i
-  binding.pry
+  key = ARGV[2].to_i
 else
   key = nil
 end
 
 if ARGV[3]
-  date = file_handler.read_file(ARGV[3])
+  date = ARGV[3]
 else
   date = nil
 end
