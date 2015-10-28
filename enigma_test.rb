@@ -20,4 +20,35 @@ class EnigmaTest < Minitest::Test
     skip
   end
 
+  def test_check_key_allows_for_invalid_number_entry
+    e = Enigma.new
+    key = 1234
+    key = e.check_key(key)
+    assert key
+    assert key.to_s.length == 5
+
+    key = 123456
+    key = e.check_key(key)
+    assert key != 123456
+    assert key.to_s.length == 5
+  end
+
+  def test_check_key_allows_for_invalid_string_entry
+    e = Enigma.new
+    key = "merlin"
+    key = e.check_key(key)
+    assert key
+    refute key == "merlin"
+    assert key.to_i.to_s == key
+  end
+
+  def test_check_key_allows_for_invalid_array_entry
+    e = Enigma.new
+    key = [1, 2, 3, 4, 5]
+    key = e.check_key(key)
+    assert key
+    refute key == [1, 2, 3, 4, 5]
+    assert key.to_i.to_s == key
+  end
+
 end

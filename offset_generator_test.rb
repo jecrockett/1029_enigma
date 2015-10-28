@@ -4,13 +4,13 @@ require './offset_generator'
 
 class OffsetGeneratorTest <  Minitest::Test
 
-  def test_key_offsets
+  def test_key_offsets_with_valid_input
     og = OffsetGenerator.new
     key = 12345
     key_offsets = og.generate_key_offsets(key)
     assert_equal 4, key_offsets.length
     assert_equal [12, 23, 34, 45], key_offsets
-  end
+  end    
 
   def test_date_offsets
     og = OffsetGenerator.new

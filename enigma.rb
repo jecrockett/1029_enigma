@@ -29,9 +29,13 @@ class Enigma
   def check_key(key)
     if key.nil?
       kdg = KeyDateGenerator.new
-      kdg.generate_key
+      key = kdg.generate_key
+    elsif key.to_s.length != 5 || !key.is_a?(Integer)
+      puts "Invalid Key -- Key must be a five-digit integer. A valid key will be provided for you."
+      key = nil
+      check_key(key)
     else
-      key
+      key = key
     end
   end
 
