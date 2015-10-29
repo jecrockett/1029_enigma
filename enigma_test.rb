@@ -15,3 +15,5 @@ class EnigmaTest < Minitest::Test
     decrypted_message = e.decrypt(12345, 311015, "n-<K ,")
     assert_equal "boston", decrypted_message
   end
+
+end

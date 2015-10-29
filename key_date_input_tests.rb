@@ -13,7 +13,7 @@ class KeyDateEntriesTest < Minitest::Test
   def test_check_key_accepts_manual_entry
     e = Enigma.new
     key = 98765
-    e.check_key(key)
+    key = e.check_key(key)
     assert key == 98765
   end
 
@@ -43,7 +43,6 @@ class KeyDateEntriesTest < Minitest::Test
     e = Enigma.new
     key = "12345"
     key = e.check_key(key)
-    assert key
     assert key == "12345"
   end
 
@@ -62,11 +61,18 @@ class KeyDateEntriesTest < Minitest::Test
     assert_equal 6, date.chars.length
   end
 
+  def test_check_date_accepts_manual_entry
+    e = Enigma.new
+    date = 191919
+    date = e.check_date(date)
+    assert date == 191919
+  end
+
   def test_check_date_corrects_invalid_date_length
     e = Enigma.new
     date = 1311015
     date = e.check_date(date)
-    refute date == "1311015"
+    refute date == 1311015
     assert_equal 6, date.length
   end
 
