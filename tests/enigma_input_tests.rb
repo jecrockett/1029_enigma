@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'pry'
 require './enigma'
 
-class KeyDateEntriesTest < Minitest::Test
+class EnigmaInputTest < Minitest::Test
 
   def test_key_gen_returns_five_digit_key
     gen = KeyDateGenerator.new

@@ -16,4 +16,10 @@ class EnigmaTest < Minitest::Test
     assert_equal "boston", decrypted_message
   end
 
+  def test_crack
+    e = Enigma.new
+    decrypted_message = e.crack(281015, "%xgg2wo!LnbWL7")
+    assert_equal "boston ..end..", decrypted_message
+  end
+
 end
