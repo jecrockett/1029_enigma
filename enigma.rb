@@ -30,12 +30,12 @@ class Enigma
     if key.nil?
       kdg = KeyDateGenerator.new
       key = kdg.generate_key
-    elsif key.to_s.length != 5 || !key.is_a?(Integer)
+    elsif key.to_s.length == 5 && (key.is_a?(Integer) || key == key.to_i.to_s)
+      key
+    else
       puts "Invalid Key -- Key must be a five-digit integer. A valid key will be provided for you."
       key = nil
       check_key(key)
-    else
-      key = key
     end
   end
 
@@ -43,8 +43,12 @@ class Enigma
     if date.nil?
       kdg = KeyDateGenerator.new
       kdg.generate_date
-    else
+    elsif date.to_s.length == 6 && (date.is_a?(Integer) || date == date.to_i.to_s)
       date
+    else
+      puts "Invalid Date -- Key must be a six-digit integer (DDMMYY format). Today's date will be provided for you."
+      date = nil
+      check_date(date)
     end
   end
 
