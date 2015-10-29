@@ -1,6 +1,7 @@
 class FileHandler
   def read_file(file_name)
     file_content = File.read(file_name)
+    binding.pry
     puts "File loaded."
     return file_content
   end
