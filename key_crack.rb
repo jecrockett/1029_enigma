@@ -18,12 +18,9 @@ class KeyCrack
     end
   end
 
-  # def calculate_difference(actual, expected)
-  #   combined = actual.zip(expected)
-  #   combined.map do |pair|
-  #     pair[0] - pair[1]
-  #   end
-  # end
+  def expected_ending
+    [14, 14, 69, 78, 68, 14, 14]
+  end
 
   def arrange_order(message, differences)
     remainder = message.length % 4
