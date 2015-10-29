@@ -26,11 +26,28 @@ class Enigma
     decrypt_message(key, date, message)
   end
 
+  def valid_key?(key)
+    key.to_s.length == 5 && (key.is_a?(Integer) || key == key.to_i.to_s)
+  end
+
+  def valid_date?(date)
+    date.to_s.length == 6 && (date.is_a?(Integer) || date == date.to_i.to_s)
+  end
+
+  def generate_random_key
+    kdg = KeyDateGenerator.new
+    key = kdg.generate_key
+  end
+
+  def generate_todays_date
+    kdg = KeyDateGenerator.new
+    kdg.generate_date
+  end
+
   def check_key(key)
     if key.nil?
-      kdg = KeyDateGenerator.new
-      key = kdg.generate_key
-    elsif key.to_s.length == 5 && (key.is_a?(Integer) || key == key.to_i.to_s)
+      generate_random_key
+    elsif valid_key?(key)
       key
     else
       puts "Invalid Key -- Key must be a five-digit integer. A valid key will be provided for you."
@@ -41,9 +58,8 @@ class Enigma
 
   def check_date(date)
     if date.nil?
-      kdg = KeyDateGenerator.new
-      kdg.generate_date
-    elsif date.to_s.length == 6 && (date.is_a?(Integer) || date == date.to_i.to_s)
+      generate_todays_date
+    elsif valid_date?(date)
       date
     else
       puts "Invalid Date -- Key must be a six-digit integer (DDMMYY format). Today's date will be provided for you."
