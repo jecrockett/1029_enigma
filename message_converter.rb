@@ -1,6 +1,5 @@
 class MessageConverter
 
-  # check if this is really the fully index
   def full_index
     (" ".."z").to_a
   end

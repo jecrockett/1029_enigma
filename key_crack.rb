@@ -9,21 +9,21 @@ class KeyCrack
     key = key(key_offsets)
   end
 
-  def extract_ending(input)
-    if input.chars.length >= 7
-      input[-7..-1]
+  def extract_ending(message)
+    if message.chars.length >= 7
+      message[-7..-1]
     else
       puts "Not enough characters to extract."
       return nil
     end
   end
 
-  def calculate_difference(actual, expected)
-    combined = actual.zip(expected)
-    combined.map do |pair|
-      pair[0] - pair[1]
-    end
-  end
+  # def calculate_difference(actual, expected)
+  #   combined = actual.zip(expected)
+  #   combined.map do |pair|
+  #     pair[0] - pair[1]
+  #   end
+  # end
 
   def arrange_order(message, differences)
     remainder = message.length % 4

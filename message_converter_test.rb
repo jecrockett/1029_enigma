@@ -4,6 +4,12 @@ require './message_converter'
 
 class MessageConverterTest < Minitest::Test
 
+  def test_full_index_length
+    mc = MessageConverter.new
+    index = mc.full_index
+    assert_equal 91, index.length
+  end
+
   def test_full_index_accuracy
     mc = MessageConverter.new
     index = mc.full_index
@@ -11,20 +17,21 @@ class MessageConverterTest < Minitest::Test
     assert_equal "R", index[50]
   end
 
-  def test_full_index_accuracy_after_rotation
-    mc = MessageConverter.new
-    index = mc.full_index
-    assert_equal "0", index[16]
-    index = index.rotate(15)
-    assert_equal "0", index[1]
-  end
-
-  def test_convert_letters_to_numbers
+  def test_convert_message_to_numbers
     mc = MessageConverter.new
     test_phrase = "boston"
     converted_message = mc.convert_to_numbers(test_phrase)
     assert_equal [66, 79, 83, 84, 79, 78], converted_message
   end
+
+  def test_convert_message_with_numbers_and_symbols
+    mc = MessageConverter.new
+    test_phrase = "%4 7*+"
+    converted_message = mc.convert_to_numbers(test_phrase)
+    assert_equal [5, 20, 0, 23, 10, 11], converted_message
+  end
+
+  # reduced array (each % 91) will be passed in, so numbers will never be negative.
 
   def test_convert_numbers_to_letters
     mc = MessageConverter.new

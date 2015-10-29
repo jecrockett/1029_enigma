@@ -19,14 +19,14 @@ class KeyDateEntriesTest < Minitest::Test
 
   def test_check_key_corrects_invalid_number_length
     e = Enigma.new
-    key = 1234
+    key = 1234 # too short
     key = e.check_key(key)
     assert key
     assert key.to_s.length == 5
 
-    key = 123456
+    key = 123456 # too long
     key = e.check_key(key)
-    assert key != 123456
+    refute key == 123456
     assert key.to_s.length == 5
   end
 
@@ -34,9 +34,8 @@ class KeyDateEntriesTest < Minitest::Test
     e = Enigma.new
     key = "merlin"
     key = e.check_key(key)
-    assert key
     refute key == "merlin"
-    assert key.to_i.to_s == key
+    assert key
   end
 
   def test_check_key_allows_string_entry_if_it_is_in_the_proper_format
@@ -50,9 +49,8 @@ class KeyDateEntriesTest < Minitest::Test
     e = Enigma.new
     key = [1, 2, 3, 4, 5]
     key = e.check_key(key)
-    assert key
     refute key == [1, 2, 3, 4, 5]
-    assert key.to_i.to_s == key
+    assert key
   end
 
   def test_date_gen_returs_six_digit_date
@@ -73,6 +71,7 @@ class KeyDateEntriesTest < Minitest::Test
     date = 1311015
     date = e.check_date(date)
     refute date == 1311015
+    assert date
     assert_equal 6, date.length
   end
 
@@ -81,6 +80,7 @@ class KeyDateEntriesTest < Minitest::Test
     date = "October 31, 2015"
     date = e.check_date(date)
     refute date == "October 31, 2015"
+    assert date
     assert_equal 6, date.length
   end
 
@@ -96,6 +96,7 @@ class KeyDateEntriesTest < Minitest::Test
     date = [311015]
     date = e.check_date(date)
     refute date == [311015]
+    assert date
     assert_equal 6, date.length
   end
 
