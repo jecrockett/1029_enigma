@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require './number_rotater'
 require './offset_generator'
 require './message_converter'
-require './crack'
+require './key_crack'
 
 class KeyCrackTest < Minitest::Test
 
